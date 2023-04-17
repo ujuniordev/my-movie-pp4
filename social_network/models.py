@@ -40,7 +40,7 @@ class Post(models.Model):
        User, on_delete=models.CASCADE, related_name='movie_post'
     )
     featured_image = CloudinaryField('image', default='placeholder')
-    body = models.TextField(blank=True)
+    # body = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
@@ -52,9 +52,9 @@ class Post(models.Model):
 
     def __str__(self):
         return (
-            f"{self.user} "
-            f"({self.created_at:%Y-%m-%d %H:%M}): "
-            f"{self.body[:30]}..."
+            f'{self.author} '
+            f'({self.created_on:%Y-%m-%d %H:%M}): '
+            f'{self.body[:30]}...'
         )
 
     def number_of_likes(self):

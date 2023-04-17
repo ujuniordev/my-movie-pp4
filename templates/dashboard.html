@@ -4,12 +4,19 @@
 
 <div class="container text-center dashboard-buttons">
     {% if user.is_authenticated %}
-    Hello, {{ user.username }}!
-    SHOW MOVIES LIST
+        Hello, {{ user.username }}!
+
     {% else %}
         <a href="{% url 'social_network:login' %}" class="btn btn-danger btn-lg">Login</a>
         OR
         <a href="{% url 'social_network:register' %}" class="btn btn-danger btn-lg">Register</a>
     {% endif %}
-</div>
-{% endblock %}
+ </div>
+
+{% for followed in user.profile.friends.all %}
+    {% for post in followed.user.movie_post.all %}
+        <li>{{post.user.username}} ({{ post.created_on }}): {{ post.content }}</li>
+    {% endfor %}
+{% endfor %}
+
+{% endblock content %}

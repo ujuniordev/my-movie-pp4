@@ -5,8 +5,7 @@
     <h1 class=""></h1>
     {% if user.is_authenticated %}
     {{profile.user.username|upper}}'s Profile
-    </h1>
-    <a href="{% url 'social_network:password_change' %}">Change password</a>
+        <a href="{% url 'social_network:password_change' %}">Change password</a>
     {% else %}
     {% endif %}
 </div>
@@ -23,20 +22,18 @@
     </div>
 </form>
 <div class="content">
-    {% for movie_post in profile.user.post.all %}
-        <div class="box">
-            {{ post.body }}
-            <span class="is-small has-text-grey-light">
-                ({{ post.created_on }})
-            </span>
-        </div>
+    {% for post in profile.user.movie_post.all %}
+    <div class="box">
+        {{ post.content }}
+        <span class="is-small has-text-grey-light">
+            ({{ post.created_on }})
+        </span>
+    </div>
     {% endfor %}
 </div>
 <div class="">
     <a href="{% url 'social_network:profile_list' %}">
-        <button class="">
-            All Profiles
-        </button>
+        <button class="">All Profiles</button>
     </a>
 </div>
 <div class="">
@@ -45,7 +42,7 @@
     </h3>
     <div class="">
         <ul>
-            {% for following in profile.friends.all %}
+            {% for following in profile.follows.all %}
             <li>
                 <a href="{% url 'social_network:profile' following.id %}">
                     {{ following }}
