@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center dashboard-buttons">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login" class="btn btn-danger btn-lg"> OR
+        <a href="{% url 'social_network:dashboard' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Return Home</a> OR
+        <a href="{% url 'social_network:register' %}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Create a New Account</a>
+    </form>
+</div>
+{% endblock %}

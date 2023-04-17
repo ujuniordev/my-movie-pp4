@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="">
+    <h1 class=""></h1>
+    {% if user.is_authenticated %}
+    {{profile.user.username|upper}}'s Profile
+    </h1>
+    <a href="{% url 'social_network:password_change' %}">Change password</a>
+    {% else %}
+    {% endif %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <div class="buttons has-addons">
+        {% if profile in user.profile.follows.all %}
+        <button class="button is-success">Follow</button>
+        <button class="button is-danger" name="unfollow" value="unfollow">Unfollow</button>
+        {% else %}
+        <button class="button is-success" name="follow" value="follow">Follow</button>
+        <button class="button is-danger is-static">Unfollow</button>
+        {% endif %}
+    </div>
+</form>
+<div class="content">
+    {% for movie_post in profile.user.post.all %}
+        <div class="box">
+            {{ post.body }}
+            <span class="is-small has-text-grey-light">
+                ({{ post.created_on }})
+            </span>
+        </div>
+    {% endfor %}
+</div>
+<div class="">
+    <a href="{% url 'social_network:profile_list' %}">
+        <button class="">
+            All Profiles
+        </button>
+    </a>
+</div>
+<div class="">
+    <h3 class="">
+        {{profile.user.username}} follows:
+    </h3>
+    <div class="">
+        <ul>
+            {% for following in profile.friends.all %}
+            <li>
+                <a href="{% url 'social_network:profile' following.id %}">
+                    {{ following }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="">
+    <h3 class="">
+        {{profile.user.username}} is followed by:
+    </h3>
+    <div class="">
+        <ul>
+            {% for follower in profile.followed_by.all %}
+            <li>
+                <a href="{% url 'social_network:profile' follower.id %}">
+                    {{ follower }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}
