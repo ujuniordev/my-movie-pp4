@@ -1,20 +1,30 @@
 
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
+from .forms import PostForm
 from django.views import generic
 from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
-
-# class PostList(generic.ListView):
-#    model = Post
-#    queryset = Post.objects.filter(status=1).order_by('created_on')
-#    template_name = 'index.html'
-#    paginate_by = 10
+from django.shortcuts import render, redirect
 
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    form = PostForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('dashboard')
+
+    followed_posts = Post.objects.filter(
+        author__profile__in=request.user.profile.friends.all()
+    ).order_by("-created_on")
+
+    return render(
+        request, 'dashboard.html', {'form': form, 'posts': followed_posts},
+        )
 
 
 def register(request):

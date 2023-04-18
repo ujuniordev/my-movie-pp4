@@ -42,7 +42,7 @@
     </h3>
     <div class="">
         <ul>
-            {% for following in profile.follows.all %}
+            {% for following in profile.friends.all %}
             <li>
                 <a href="{% url 'social_network:profile' following.id %}">
                     {{ following }}

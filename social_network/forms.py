@@ -9,8 +9,6 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class PostForm(forms.ModelForm):
-    body = forms.CharField(required=True)
-
     class Meta:
         model = Post
-        exclude = ("user", )
+        exclude = ("user", 'likes', 'status', 'author',)

@@ -2,21 +2,48 @@
 
 {% block content %}
 
-<div class="container text-center dashboard-buttons">
-    {% if user.is_authenticated %}
-        Hello, {{ user.username }}!
 
-    {% else %}
-        <a href="{% url 'social_network:login' %}" class="btn btn-danger btn-lg">Login</a>
-        OR
-        <a href="{% url 'social_network:register' %}" class="btn btn-danger btn-lg">Register</a>
-    {% endif %}
- </div>
 
-{% for followed in user.profile.friends.all %}
-    {% for post in followed.user.movie_post.all %}
-        <li>{{post.user.username}} ({{ post.created_on }}): {{ post.content }}</li>
-    {% endfor %}
-{% endfor %}
+{% if user.is_authenticated %}
+<div class="container text-center">
+    <h5>Hello, {{ user.username }}!</h5>
+    <div class="row">
+        <div class="col">
+            <ul>
+                {% for post in posts %}
+                    <li class="card text-center m-3">
+                        <div class="card-header">
+                            {{ post.content.title }}
+                          </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ post.content.slug }}</p>
+                        <a href="#" class="btn btn-primary">Read more</a>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            {{ post.created_on }}
+                          </div>
+                    </li>
+                {% endfor %}
+            </ul>
 
+        </div>
+        <div class="col">
+            <div>
+                Post a movie
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary btn-lg" type="submit">Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="dashboard-buttons container text-center">
+    <a href="{% url 'social_network:login' %}" class="btn btn-danger btn-lg">Login</a>
+    OR
+    <a href="{% url 'social_network:register' %}" class="btn btn-danger btn-lg">Register</a>
+</div>
+{% endif %}
 {% endblock content %}

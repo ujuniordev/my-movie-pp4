@@ -9,11 +9,9 @@ class Profile(models.Model):
     name = models.CharField(max_length=200, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=200, blank=False)
-    # bio = models.TextField(default='', max_length=300)
     avatar = CloudinaryField('avatar', default='placeholder')
     friends = models.ManyToManyField(
         'self', blank=True, related_name='followed_by', symmetrical=False)
-    # slug = models.SlugField(unique=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -40,7 +38,6 @@ class Post(models.Model):
        User, on_delete=models.CASCADE, related_name='movie_post'
     )
     featured_image = CloudinaryField('image', default='placeholder')
-    # body = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
@@ -54,7 +51,7 @@ class Post(models.Model):
         return (
             f'{self.author} '
             f'({self.created_on:%Y-%m-%d %H:%M}): '
-            f'{self.body[:30]}...'
+            f'{self.content[:30]}...'
         )
 
     def number_of_likes(self):

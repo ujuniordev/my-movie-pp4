@@ -19,7 +19,7 @@
   <header>
     <nav class="navbar bg-primary" data-bs-theme="dark">
       <div class="container-fluid">
-        <a href="{% url 'social_network:dashboard' %}"class="navbar-brand">
+        <a href="{% url 'social_network:dashboard' %}" class="navbar-brand">
           <h1>My Movie</h1>
           <!-- <h3>Where you find the best movie content</h3> -->
         </a>
@@ -27,14 +27,16 @@
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             {% if user.is_authenticated %}
             <li>
-              <a href="{% url 'social_network:profile_list' %}" class="nav-link text-white">
-                Profile
-              </a>
+              <a href="{% url 'social_network:dashboard' %}" class="nav-link text-white">Dashboard</a>
             </li>
             <li>
-              <a href="{% url 'social_network:logout' %}" class="nav-link text-white">
-                Logout
-              </a>
+              <a href="{% url 'social_network:profile' request.user.profile.id %}" class="nav-link text-white">MyProfile</a>
+            </li>
+            <li>
+              <a href="{% url 'social_network:profile_list' %}" class="nav-link text-white">All Profiles</a>
+            </li>
+            <li>
+              <a href="{% url 'social_network:logout' %}" class="nav-link text-white">Logout</a>
             </li>
             {% else %}
             {% endif %}
