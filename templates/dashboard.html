@@ -2,8 +2,6 @@
 
 {% block content %}
 
-
-
 {% if user.is_authenticated %}
 <div class="container text-center">
     <h5>Hello, {{ user.username }}!</h5>
@@ -17,11 +15,13 @@
                           </div>
                         <div class="card-body">
                             <p class="card-text">{{ post.content.slug }}</p>
-                        <a href="#" class="btn btn-primary">Read more</a>
+                        <a href="{% url 'social_network:post_detail' post.slug %}" class="btn btn-primary">Read more</a>
                         </div>
                         <div class="card-footer text-body-secondary">
                             {{ post.created_on }}
-                          </div>
+                            <i class="far fa-heart"></i>
+                                <p>{{ post.number_of_likes }}</p>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>

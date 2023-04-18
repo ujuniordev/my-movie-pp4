@@ -1,8 +1,8 @@
 
 from django.contrib.auth import login
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .forms import PostForm
-from django.views import generic
+from django.views import generic, View
 from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 
 def dashboard(request):
     form = PostForm(request.POST or None)
-    if request.method == "POST":
+    if request.method == 'POST':
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
@@ -20,7 +20,7 @@ def dashboard(request):
 
     followed_posts = Post.objects.filter(
         author__profile__in=request.user.profile.friends.all()
-    ).order_by("-created_on")
+    ).order_by('-created_on')
 
     return render(
         request, 'dashboard.html', {'form': form, 'posts': followed_posts},
@@ -53,13 +53,31 @@ def profile(request, pk):
         missing_profile.save()
 
     profile = Profile.objects.get(pk=pk)
-    if request.method == "POST":
+    if request.method == 'POST':
         current_user_profile = request.user.profile
         data = request.POST
-        action = data.get("follow")
-        if action == "follow":
+        action = data.get('follow')
+        if action == 'follow':
             current_user_profile.friends.add(profile)
-        elif action == "unfollow":
+        elif action == 'unfollow':
             current_user_profile.friends.remove(profile)
         current_user_profile.save()
-    return render(request, "my_movie/profile.html", {"profile": profile})
+    return render(request, 'my_movie/profile.html', {'profile': profile})
+
+
+class PostDetail(View):
+
+    def get(self, request, slug, *args, **kwargs):
+        queryset = Post.objects.filter()
+        post = get_object_or_404(queryset, slug=slug)
+        liked = False
+        if post.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        return render(
+            request, 'post_detail.html',
+            {
+                'post': post,
+                'liked': liked
+            },
+        )

@@ -1,71 +1,77 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="">
-    <h1 class=""></h1>
-    {% if user.is_authenticated %}
-    {{profile.user.username|upper}}'s Profile
-        <a href="{% url 'social_network:password_change' %}">Change password</a>
-    {% else %}
-    {% endif %}
-</div>
-<form method="post">
-    {% csrf_token %}
-    <div class="buttons has-addons">
-        {% if profile in user.profile.follows.all %}
-        <button class="button is-success">Follow</button>
-        <button class="button is-danger" name="unfollow" value="unfollow">Unfollow</button>
-        {% else %}
-        <button class="button is-success" name="follow" value="follow">Follow</button>
-        <button class="button is-danger is-static">Unfollow</button>
-        {% endif %}
-    </div>
-</form>
-<div class="content">
-    {% for post in profile.user.movie_post.all %}
-    <div class="box">
-        {{ post.content }}
-        <span class="is-small has-text-grey-light">
-            ({{ post.created_on }})
-        </span>
-    </div>
-    {% endfor %}
-</div>
-<div class="">
-    <a href="{% url 'social_network:profile_list' %}">
-        <button class="">All Profiles</button>
-    </a>
-</div>
-<div class="">
-    <h3 class="">
-        {{profile.user.username}} follows:
-    </h3>
-    <div class="">
-        <ul>
-            {% for following in profile.friends.all %}
-            <li>
-                <a href="{% url 'social_network:profile' following.id %}">
-                    {{ following }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-<div class="">
-    <h3 class="">
-        {{profile.user.username}} is followed by:
-    </h3>
-    <div class="">
-        <ul>
-            {% for follower in profile.followed_by.all %}
-            <li>
-                <a href="{% url 'social_network:profile' follower.id %}">
-                    {{ follower }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+<div class="container text-center">
+    <div class="row row-cols-2">
+        <div class="col">
+            {% if user.is_authenticated %}
+            <h2>{{profile.user.username|upper}}'s Profile</h2>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    {% if profile in user.profile.friends.all %}
+                    <button class="btn btn-secondary btn-sm disabled">Follow</button>
+                    <button class="btn btn-danger btn-sm" name="follow" value="unfollow">Unfollow</button>
+                    {% else %}
+                    <button class="btn btn-success btn-sm" name="follow" value="follow">Follow</button>
+                    <button class="btn btn-secondary btn-sm disabled">Unfollow</button>
+                    {% endif %}
+                </div>
+            </form>
+            <div class="content">
+                {% for post in profile.user.movie_post.all %}
+                <li class="card text-center m-3">
+                    <div class="card-header">
+                        {{ post.content.title }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ post.content.slug }}</p>
+                        <a href="{% url 'social_network:post_detail' post.slug %}" class="btn btn-primary btn-sm">Read more</a>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        {{ post.created_on }}
+                        <i class="far fa-heart"></i>
+                        <p>{{ post.number_of_likes }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col">
+            <div>
+                <h2>{{profile.user.username|upper}} follows:</h2>
+                <div>
+                    <ul class="list-group">
+                        {% for following in profile.friends.all %}
+                        <li class="list-group-item">
+                            <a href="{% url 'social_network:profile' following.id %}">
+                                {{ following }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h2>
+                    {{profile.user.username|upper}} is followed by:
+                </h2>
+                <div>
+                    <ul class="list-group">
+                        {% for follower in profile.followed_by.all %}
+                        <li class="list-group-item">
+                            <a href="{% url 'social_network:profile' follower.id %}">
+                                {{ follower }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

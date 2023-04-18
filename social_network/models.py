@@ -28,7 +28,7 @@ def create_profile(sender, instance, created, **kwargs):
         user_profile.save()
 
 
-STATUS = ((0, 'Draft'), (1, 'Published'))
+# STATUS = ((0, 'Draft'), (1, 'Published'))
 
 
 class Post(models.Model):
@@ -37,11 +37,11 @@ class Post(models.Model):
     author = models.ForeignKey(
        User, on_delete=models.CASCADE, related_name='movie_post'
     )
-    featured_image = CloudinaryField('image', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    status = models.IntegerField(choices=STATUS, default=0)
+    featured_image = CloudinaryField('image', default='placeholder')
+    # status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='post_likes', blank=True)
 
     class Meta:
