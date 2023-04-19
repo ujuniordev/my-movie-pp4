@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul class="list-group">
-  {% for profile in profiles %}
-  <li class="card m-3">
-    <div class="card-body">
-      <h5 class="card-title">
-        @{{ profile.user.username|lower }}
-      </h5>
-      <a href="{% url 'social_network:profile' profile.id %}" class="btn btn-primary">
-        View Profile
-      </a>
-    </div>
-  </li>
-  {% endfor %}
-</ul>
+<div class="container text-center">
+  <ul class="list-group">
+    {% for profile in profiles %}
+    <li class="card m-3">
+      <div class="card-body">
+        <h5 class="card-title">
+          @{{ profile.user.username|lower }}
+        </h5>
+        <a href="{% url 'social_network:profile' profile.id %}" class="btn btn-primary">
+          View Profile
+        </a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock content %}

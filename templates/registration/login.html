@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container text-center dashboard-buttons">
-    <form method="post">
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Login" class="btn btn-danger btn-lg"> OR

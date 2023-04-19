@@ -16,6 +16,7 @@
                         <div class="card-body">
                             <p class="card-text">{{ post.content.slug }}</p>
                         <a href="{% url 'social_network:post_detail' post.slug %}" class="btn btn-primary">Read more</a>
+                        <a href="{% url 'social_network:post_delete' post.slug %}" class="btn btn-danger">Delete</a>
                         </div>
                         <div class="card-footer text-body-secondary">
                             {{ post.created_on }}

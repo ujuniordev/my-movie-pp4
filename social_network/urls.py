@@ -16,4 +16,5 @@ urlpatterns = [
                 'account:password_change_done')), name='password_change'),
     path('register/', register, name='register'),
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
+    path('<slug:slug>/delete', views.PostDeleteView.as_view(), name='post_delete'),
 ]

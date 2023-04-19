@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center dashboard-buttons">
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete this post? {{ post.content.slug }}</p>
+        <input type="submit" value="Confirm" class="btn btn-danger btn-lg">
+        <a href="{% url 'social_network:dashboard' %}" class="btn btn-primary btn-lg">Return</a>
+    </form>
+</div>
+{% endblock content %}

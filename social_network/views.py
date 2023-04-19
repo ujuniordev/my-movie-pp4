@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import PostForm
 from django.views import generic, View
+from django.views.generic.edit import DeleteView
 from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
@@ -19,14 +20,14 @@ def dashboard(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('dashboard')
+            return redirect('social_network:dashboard')
 
     followed_posts = Post.objects.filter(
         author__profile__in=request.user.profile.friends.all()
     ).order_by('-created_on')
 
     return render(
-        request, 'dashboard.html', {'form': form, 'posts': followed_posts},
+        request, 'post_detail.html', {'form': form, 'posts': followed_posts},
         )
 
 
@@ -75,14 +76,16 @@ class PostDetail(LoginRequiredMixin, View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Post.objects.filter()
         post = get_object_or_404(queryset, slug=slug)
-        liked = False
-        if post.likes.filter(id=self.request.user.id).exists():
-            liked = True
 
         return render(
             request, 'post_detail.html',
             {
                 'post': post,
-                'liked': liked
             },
         )
+
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = '/'
+    template_name = 'post_delete.html'
