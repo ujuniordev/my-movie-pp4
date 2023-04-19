@@ -27,7 +27,7 @@ def dashboard(request):
     ).order_by('-created_on')
 
     return render(
-        request, 'post_detail.html', {'form': form, 'posts': followed_posts},
+        request, 'dashboard.html', {'form': form, 'posts': followed_posts},
         )
 
 

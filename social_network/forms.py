@@ -11,4 +11,4 @@ class CustomUserCreationForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ("user", 'author', 'slug')
+        exclude = ("user", 'author')

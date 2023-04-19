@@ -46,8 +46,3 @@ class Post(models.Model):
             f'({self.created_on:%Y-%m-%d %H:%M}): '
             f'{self.content[:30]}...'
         )
-
-    def number_of_likes(self):
-        return self.likes.count()
-
-
