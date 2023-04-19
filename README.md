@@ -132,6 +132,8 @@ The focus was on providing a clean intuitive interface making it clear for the u
 
 - [Stack Overflow](https://stackoverflow.com/) was also referenced to check Python function methods and iteration methods.
 
+- With the help from [Real Python](https://realpython.com/) I was able to build most of the features of the website.
+
 - And of course, the [Code Institute LMS](https://learn.codeinstitute.net/) was extensively used especially the Codestar blog walkthrough project.
 
 ## Testing
