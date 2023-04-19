@@ -1,5 +1,6 @@
 
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import PostForm
 from django.views import generic, View
@@ -7,14 +8,16 @@ from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+@login_required
 def dashboard(request):
     form = PostForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = request.user
+            post.author = request.user
             post.save()
             return redirect('dashboard')
 
@@ -31,7 +34,7 @@ def register(request):
     if request.method == 'GET':
         return render(
             request, 'registration/register.html',
-            {'form': CustomUserCreationForm}
+            {'form': CustomUserCreationForm()}
         )
     elif request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -41,12 +44,14 @@ def register(request):
         return redirect(reverse('social_network:dashboard'))
 
 
+@login_required
 def profile_list(request):
     profiles = Profile.objects.exclude(user=request.user)
     return render(
         request, 'my_movie/profile_list.html', {'profiles': profiles})
 
 
+@login_required
 def profile(request, pk):
     if not hasattr(request.user, 'profile'):
         missing_profile = Profile(user=request.user)
@@ -65,7 +70,7 @@ def profile(request, pk):
     return render(request, 'my_movie/profile.html', {'profile': profile})
 
 
-class PostDetail(View):
+class PostDetail(LoginRequiredMixin, View):
 
     def get(self, request, slug, *args, **kwargs):
         queryset = Post.objects.filter()

@@ -3,8 +3,7 @@
 {% block content %}
 <ul class="list-group">
   {% for profile in profiles %}
-  <li class="card m-3" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
+  <li class="card m-3">
     <div class="card-body">
       <h5 class="card-title">
         @{{ profile.user.username|lower }}

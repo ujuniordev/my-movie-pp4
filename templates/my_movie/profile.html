@@ -23,7 +23,7 @@
                 {% for post in profile.user.movie_post.all %}
                 <li class="card text-center m-3">
                     <div class="card-header">
-                        {{ post.content.title }}
+                        {{ post.content.title | safe }}
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ post.content.slug }}</p>
@@ -31,8 +31,6 @@
                     </div>
                     <div class="card-footer text-body-secondary">
                         {{ post.created_on }}
-                        <i class="far fa-heart"></i>
-                        <p>{{ post.number_of_likes }}</p>
                     </div>
                 </li>
                 {% endfor %}
