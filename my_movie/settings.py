@@ -28,9 +28,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['my-movie-pp4.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['my-movie-pp4.herokuapp.com', 'localhost', '8000-ujuniordev-mymoviepp4-jj4t87uwqwk.ws-us98.gitpod.io']
 
 
 # Application definition
@@ -89,8 +89,8 @@ WSGI_APPLICATION = 'my_movie.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 # }
