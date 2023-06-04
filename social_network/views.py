@@ -12,9 +12,6 @@ from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django import template
-
-# register = template.Library()
 
 
 @login_required
