@@ -1,21 +1,13 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
-<div class="col">
-    <div>
+<div class="container">
+    <div class="container text-center dashboard-buttons">
         <h1>Update your post</h1>
-        <form action="update_record" method="POST">
+        <form method="POST">
             {% csrf_token %}
-
-            Title:<br>
-            <input name="title" value="{{ post.title }}">
-            <br><br>
-            Slug:<br>
-            <input name="slug" value="{{ post.slug }}">
-            <br><br>
-            Content:<br>
-            <input type="textarea" name="content" value="{{ post.content }}">
-            <br><br>
-            <button class="btn btn-primary btn-lg" type="submit">Update</button>
+            {{ form.as_p }}
+            <button class="btn btn-warning btn-lg" type="submit">Update</button>
+            <a href="{% url 'social_network:dashboard' %}" class="btn btn-primary btn-lg">Return</a>
         </form>
     </div>
 </div>

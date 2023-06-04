@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path, include, reverse_lazy
-from .views import dashboard, profile_list, profile, register
+from .views import dashboard, profile_list, profile, register, PostUpdateView, PostDeleteView
 from django.contrib.auth import views as auth_views
 
 
@@ -17,6 +17,5 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
     path('<slug:slug>/delete', views.PostDeleteView.as_view(), name='post_delete'),
-    # path('<slug:slug>/update', views.post_update, name='post_update'),
-    # path('<slug:slug>/update_record', views.update_record, name='update_record'),
+    path('<slug:slug>/update', views.PostUpdateView.as_view(), name='post_update'),
 ]
