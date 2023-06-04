@@ -31,6 +31,16 @@ def dashboard(request):
         )
 
 
+@login_required
+def post_update(request, id):
+    post = Post.objects.get(id=id)
+    template = loader.get_template('post_update.html')
+    context = {
+        'post': post,
+    }
+    return HttpResponse(template.render(context, request))
+
+
 def register(request):
     if request.method == 'GET':
         return render(
@@ -83,6 +93,7 @@ class PostDetail(LoginRequiredMixin, View):
                 'post': post,
             },
         )
+
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):

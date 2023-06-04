@@ -27,6 +27,7 @@
         </div>
     </div>
     <a href="{% url 'social_network:dashboard' %}" class="btn btn-primary">Return</a>
+    <a href="{% url 'social_network:post_update' post.slug %}" class="btn btn-warning">Update</a>
     <a href="{% url 'social_network:post_delete' post.slug %}" class="btn btn-danger">Delete</a>
 </div>
 
