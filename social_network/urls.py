@@ -17,6 +17,6 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
     path('<slug:slug>/delete', views.PostDeleteView.as_view(), name='post_delete'),
-    path('<slug:slug>/update', views.post_update, name='post_update'),
-    path('update/updaterecord/<slug:slug', views.update_record, name='update_record'),
+    # path('<slug:slug>/update', views.post_update, name='post_update'),
+    # path('<slug:slug>/update_record', views.update_record, name='update_record'),
 ]
