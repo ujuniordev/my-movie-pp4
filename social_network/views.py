@@ -2,14 +2,19 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
-from .forms import PostForm
+from .forms import PostForm, PostUpdateForm
 from django.views import generic, View
 from django.views.generic.edit import DeleteView
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
 from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+# from django import template
+
+# register = template.Library()
 
 
 @login_required
@@ -32,13 +37,25 @@ def dashboard(request):
 
 
 @login_required
-def post_update(request, id):
-    post = Post.objects.get(id=id)
+def post_update(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    post = Post.objects.get(slug=slug)
     template = loader.get_template('post_update.html')
     context = {
         'post': post,
     }
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def update_record(request, id):
+    title = request.POST['title']
+    slug = request.POST['slug']
+    post = Post.objects.get(slug=slug)
+    post.title = title
+    post.slug = slug
+    post.save()
+    return HttpResponseRedirect(reverse('dashboard'))
 
 
 def register(request):

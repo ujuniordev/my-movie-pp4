@@ -2,11 +2,20 @@
 {% block content %}
 <div class="col">
     <div>
-        Update your post
-        <form action="update_record/{{ post.id }}" method="POST">
+        <h1>Update your post</h1>
+        <form action="update_record/{{ post.slug }}" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-primary btn-lg" type="submit">Post</button>
+
+            Title:<br>
+            <input name="title" value="{{ post.title }}">
+            <br><br>
+            Slug:<br>
+            <input name="slug" value="{{ post.slug }}">
+            <br><br>
+            Content:<br>
+            <input type="textarea" name="content" value="{{ post.content }}">
+            <br><br>
+            <button class="btn btn-primary btn-lg" type="submit">Update</button>
         </form>
     </div>
 </div>
