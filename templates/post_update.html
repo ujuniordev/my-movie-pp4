@@ -1,0 +1,13 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="col">
+    <div>
+        Post a movie
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary btn-lg" type="submit">Post</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
