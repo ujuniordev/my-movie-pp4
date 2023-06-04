@@ -95,7 +95,6 @@ class PostDetail(LoginRequiredMixin, View):
         )
 
 
-
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = '/'
