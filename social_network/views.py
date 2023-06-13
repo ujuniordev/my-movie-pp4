@@ -5,8 +5,6 @@ from django.shortcuts import redirect, render, get_object_or_404
 from .forms import PostForm
 from django.views import generic, View
 from django.views.generic.edit import UpdateView, DeleteView
-# from django.http import HttpResponse, HttpResponseRedirect
-# from django.template import loader
 from django.urls import reverse
 from .models import Post, Profile
 from social_network.forms import CustomUserCreationForm
@@ -31,28 +29,6 @@ def dashboard(request):
     return render(
         request, 'dashboard.html', {'form': form, 'posts': followed_posts},
         )
-
-
-# @login_required
-# def post_update(request, slug):
-#    post = get_object_or_404(Post, slug=slug)
-#    post = Post.objects.get(slug=slug)
-#    template = loader.get_template('post_update.html')
-#    context = {
-#        'post': post,
-#    }
-#    return HttpResponse(template.render(context, request))
-
-
-# @login_required
-# def update_record(request, slug):
-#    title = request.POST['title']
-#    slug = request.POST['slug']
-#    post = Post.objects.get(slug=slug)
-#    post.title = title
-#    post.slug = slug
-#    post.save()
-#    return HttpResponseRedirect(reverse('social_network:dashboard'))
 
 
 def register(request):
